@@ -83,7 +83,8 @@ jobs:
   deploy:
     name: Deploy to OpenShift Cluster
     needs: build-and-scan
-    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+    if: false
+    #if: github.ref == 'refs/heads/main' && github.event_name == 'push'
     runs-on: ubuntu-latest
 
     steps:
