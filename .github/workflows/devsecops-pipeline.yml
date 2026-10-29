@@ -25,6 +25,7 @@ jobs:
         uses: hadolint/hadolint-action@v3.1.0
         with:
           dockerfile: 01-app-deployment/Dockerfile
+          failure-threshold: error
 
   # -------------------------------------------------------------
   # STAGE 2: BUILD & CONTAINER VULNERABILITY SCANNING
