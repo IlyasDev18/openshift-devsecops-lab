@@ -93,7 +93,7 @@ jobs:
       - name: Install OpenShift CLI (oc)
         uses: redhat-actions/oc-installer@v1
         with:
-          oc_version: '4.13'
+          oc_version: 'latest'
 
       - name: Authenticate to OpenShift Cluster
         uses: redhat-actions/oc-login@v1
