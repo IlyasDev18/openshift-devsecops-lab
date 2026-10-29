@@ -2,16 +2,17 @@ FROM python:3.11-slim
 
 WORKDIR /app
 
-# Prevent Python from writing .pyc files and enable unbuffered logging
 ENV PYTHONDONTWRITEBYTECODE=1 \
     PYTHONUNBUFFERED=1
+
+# Upgrade build/packaging tools to clear base image package CVEs
+RUN pip install --no-cache-dir --upgrade pip setuptools wheel jaraco.context
 
 COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
 COPY app.py .
 
-# Security requirement for OpenShift: Run as non-root user
 USER 1001
 
 EXPOSE 8080
