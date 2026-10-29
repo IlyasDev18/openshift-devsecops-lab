@@ -18,7 +18,7 @@ spec:
     spec:
       containers:
       - name: api
-        image: ghcr.io/lyasDev18/openshift-devsecops-lab/backend:latest
+        image: ghcr.io/ilyasdev18/openshift-devsecops-lab/
         imagePullPolicy: IfNotPresent
         ports:
         - containerPort: 8080
