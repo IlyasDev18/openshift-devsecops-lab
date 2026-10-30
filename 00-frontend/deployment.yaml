@@ -18,7 +18,7 @@ spec:
     spec:
       containers:
       - name: frontend
-        image: quay.io/ilyas/frontend-app:latest # Replace with your image registry/tag
+        image: quay.io/ilyasdev18/frontend-app:latest 
         ports:
         - containerPort: 8080
           name: http
