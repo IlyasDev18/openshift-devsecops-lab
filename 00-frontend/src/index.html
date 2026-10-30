@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OpenShift DevSecOps Lab</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: #0f172a;
+            color: #f8fafc;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .card {
+            background: #1e293b;
+            padding: 2.5rem;
+            border-radius: 12px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+            max-width: 500px;
+            width: 100%;
+            border: 1px solid #334155;
+        }
+        h1 { font-size: 1.5rem; margin-bottom: 0.5rem; color: #38bdf8; }
+        p { color: #94a3b8; font-size: 0.95rem; }
+        .status-box {
+            margin-top: 1.5rem;
+            padding: 1rem;
+            border-radius: 8px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .online { background-color: #064e3b; color: #34d399; border: 1px solid #059669; }
+        .offline { background-color: #7f1d1d; color: #f87171; border: 1px solid #dc2626; }
+        .details {
+            margin-top: 1rem;
+            background: #0f172a;
+            padding: 1rem;
+            border-radius: 6px;
+            font-family: monospace;
+            font-size: 0.85rem;
+            color: #cbd5e1;
+            white-space: pre-wrap;
+        }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <h1>DevSecOps Lab Dashboard</h1>
+        <p>OpenShift Multi-Tier Microservice Status</p>
+
+        <div id="status" class="status-box offline">
+            <span>Backend API:</span>
+            <span id="status-text">Connecting...</span>
+        </div>
+
+        <div class="details" id="raw-json">Waiting for HTTP response from backend-service:8080...</div>
+    </div>
+
+    <script>
+        // Fetch API via browser endpoint or internal router proxy
+        fetch('/api/')
+            .then(response => {
+                if (!response.ok) throw new Error('NetworkPolicy or Route Blocked');
+                return response.json();
+            })
+            .then(data => {
+                const statusBox = document.getElementById('status');
+                statusBox.className = 'status-box online';
+                document.getElementById('status-text').innerText = 'CONNECTED (NetworkPolicy Allowed)';
+                document.getElementById('raw-json').innerText = JSON.stringify(data, null, 2);
+            })
+            .catch(err => {
+                const statusBox = document.getElementById('status');
+                statusBox.className = 'status-box offline';
+                document.getElementById('status-text').innerText = 'BLOCKED / UNREACHABLE';
+                document.getElementById('raw-json').innerText = 'Error: ' + err.message;
+            });
+    </script>
+</body>
+</html>
